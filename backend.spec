@@ -1,4 +1,4 @@
-# PyInstaller spec for Brahma AI backend
+# PyInstaller spec for Jarvis backend
 # Builds an onedir distribution to ship inside Electron's resources/backend
 
 import pathlib
