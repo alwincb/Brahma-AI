@@ -54,7 +54,7 @@ def _extract_terms(query: str) -> list[str]:
 def desktop_search(parameters: dict, response=None, player=None, session_memory=None) -> str:
     query = str((parameters or {}).get("query") or "").strip()
     if not query:
-        return "Search query is required."
+        return "Eine Suchanfrage ist erforderlich."
 
     roots = []
     requested_path = str((parameters or {}).get("path") or "").strip()
@@ -99,7 +99,7 @@ def desktop_search(parameters: dict, response=None, player=None, session_memory=
             break
 
     if not matches:
-        return f"No files found for '{query}'."
+        return f"Keine Dateien für '{query}' gefunden."
 
     lines = []
     for index, path in enumerate(matches, start=1):

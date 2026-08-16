@@ -60,8 +60,8 @@ def _normalize_name(name: str) -> str:
 def _open_url(url: str) -> str:
     if sys.platform == "win32":
         subprocess.Popen(["cmd", "/c", "start", "", url], shell=False)
-        return f"Opened {url}"
-    return browser_control(parameters={"action": "go_to", "url": url}, player=None) or f"Opened {url}"
+        return f"{url} geöffnet"
+    return browser_control(parameters={"action": "go_to", "url": url}, player=None) or f"{url} geöffnet"
 
 
 def _run_step(step: str, player=None) -> str:
@@ -70,7 +70,7 @@ def _run_step(step: str, player=None) -> str:
 
     if lower.startswith(("open ", "launch ", "start ")):
         app_name = text.split(" ", 1)[1].strip()
-        return open_app(parameters={"app_name": app_name}, player=player) or f"Opened {app_name}"
+        return open_app(parameters={"app_name": app_name}, player=player) or f"{app_name} geöffnet"
 
     if lower.startswith(("website ", "go to ", "visit ")):
         url = text.split(" ", 1)[1].strip()
@@ -78,7 +78,7 @@ def _run_step(step: str, player=None) -> str:
 
     if "youtube" in lower and ("playlist" in lower or "play " in lower):
         query = text.replace("play", "", 1).strip()
-        return youtube_video(parameters={"action": "play", "query": query}, player=player) or "Started YouTube playback."
+        return youtube_video(parameters={"action": "play", "query": query}, player=player) or "YouTube-Wiedergabe gestartet."
 
     if "mute notifications" in lower or "turn off notifications" in lower or "focus mode" in lower:
         return computer_settings(
@@ -87,7 +87,7 @@ def _run_step(step: str, player=None) -> str:
                 "description": "Turn on do not disturb and mute notifications",
             },
             player=player,
-        ) or "Notifications muted."
+        ) or "Benachrichtigungen stummgeschaltet."
 
     if "organize downloads" in lower:
         return organize_downloads("by_type")
@@ -106,42 +106,42 @@ def workflow_manager(parameters: dict, response=None, player=None, session_memor
 
     if action == "list":
         if not workflows:
-            return "No workflows saved yet."
+            return "Noch keine Workflows gespeichert."
         names = ", ".join(sorted(workflows.keys()))
-        return f"Saved workflows: {names}"
+        return f"Gespeicherte Workflows: {names}"
 
     if action == "create":
         if not name:
-            return "Workflow name is required."
+            return "Ein Workflow-Name ist erforderlich."
         steps = _split_steps(parameters or {})
         if not steps:
-            return "Workflow steps are required."
+            return "Workflow-Schritte sind erforderlich."
         key = _normalize_name(name)
         workflows[key] = {"name": name, "steps": steps}
         _save_workflows(workflows)
-        return f"Workflow '{name}' saved with {len(steps)} steps."
+        return f"Workflow '{name}' mit {len(steps)} Schritten gespeichert."
 
     if action == "show":
         key = _normalize_name(name)
         workflow = workflows.get(key)
         if not workflow:
-            return f"Workflow '{name}' not found."
+            return f"Workflow '{name}' nicht gefunden."
         lines = [f"{index}. {step}" for index, step in enumerate(workflow.get('steps', []), start=1)]
         return f"Workflow '{workflow.get('name', name)}':\n" + "\n".join(lines)
 
     if action == "delete":
         key = _normalize_name(name)
         if key not in workflows:
-            return f"Workflow '{name}' not found."
+            return f"Workflow '{name}' nicht gefunden."
         deleted = workflows.pop(key)
         _save_workflows(workflows)
-        return f"Deleted workflow '{deleted.get('name', name)}'."
+        return f"Workflow '{deleted.get('name', name)}' gelöscht."
 
     if action == "run":
         key = _normalize_name(name)
         workflow = workflows.get(key)
         if not workflow:
-            return f"Workflow '{name}' not found."
+            return f"Workflow '{name}' nicht gefunden."
         step_runner = (parameters or {}).get("step_runner")
         results = []
         for index, step in enumerate(workflow.get("steps", []), start=1):
@@ -151,8 +151,8 @@ def workflow_manager(parameters: dict, response=None, player=None, session_memor
                 else:
                     result = _run_step(step, player=player)
             except Exception as exc:
-                result = f"Failed: {exc}"
+                result = f"Fehlgeschlagen: {exc}"
             results.append(f"{index}. {step} -> {result}")
-        return f"Workflow '{workflow.get('name', name)}' executed.\n" + "\n".join(results)
+        return f"Workflow '{workflow.get('name', name)}' ausgeführt.\n" + "\n".join(results)
 
-    return "Unknown workflow action."
+    return "Unbekannte Workflow-Aktion."

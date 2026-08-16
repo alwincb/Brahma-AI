@@ -85,19 +85,19 @@ async def _control_device_async(action: str, target: dict) -> str:
 
     if action == "on":
         await device.turn_on()
-        return f"Turned on {target['alias']}."
+        return f"{target['alias']} eingeschaltet."
     if action == "off":
         await device.turn_off()
-        return f"Turned off {target['alias']}."
+        return f"{target['alias']} ausgeschaltet."
     if action == "toggle":
         if getattr(device, "is_on", False):
             await device.turn_off()
-            return f"Turned off {target['alias']}."
+            return f"{target['alias']} ausgeschaltet."
         await device.turn_on()
-        return f"Turned on {target['alias']}."
+        return f"{target['alias']} eingeschaltet."
 
-    state = "on" if getattr(device, "is_on", False) else "off"
-    return f"{target['alias']} is currently {state}."
+    state = "an" if getattr(device, "is_on", False) else "aus"
+    return f"{target['alias']} ist gerade {state}."
 
 
 def kasa_control(parameters: dict, response=None, player=None, session_memory=None) -> str:
@@ -107,22 +107,22 @@ def kasa_control(parameters: dict, response=None, player=None, session_memory=No
     if action == "discover":
         devices = asyncio.run(_discover_devices_async())
         if not devices:
-            return "No Kasa devices found on the local network."
+            return "Keine Kasa-Geräte im lokalen Netzwerk gefunden."
         lines = [
             f"{index}. {device['alias']} ({device['model']}) - {'on' if device['is_on'] else 'off'}"
             for index, device in enumerate(devices, start=1)
         ]
-        return "Kasa devices found:\n" + "\n".join(lines)
+        return "Kasa-Geräte gefunden:\n" + "\n".join(lines)
 
     devices = _load_devices()
     if not devices:
         devices = asyncio.run(_discover_devices_async())
     if not devices:
-        return "No Kasa devices found. Try discovery first."
+        return "Keine Kasa-Geräte gefunden. Bitte zuerst die Suche starten."
 
     target = _find_target(devices, device_name)
     if not target:
-        return f"I couldn't find a Kasa device matching '{device_name}'."
+        return f"Ich konnte kein Kasa-Gerät mit dem Namen '{device_name}' finden."
 
     result = asyncio.run(_control_device_async(action, target))
     refreshed = asyncio.run(_discover_devices_async())
