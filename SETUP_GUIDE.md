@@ -22,7 +22,7 @@ cd Mark-XXX-main\Mark-XXX-main
 ---------------------
 ```powershell
 python -m venv .venv
-.\ .venv\Scripts\activate
+\.venv\Scripts\activate
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 # Playwright needs its runtime binaries
@@ -52,7 +52,7 @@ npm start
 -------------------------------------
 If you prefer to run the backend yourself:
 ```powershell
-.\ .venv\Scripts\activate
+\.venv\Scripts\activate
 python bridge_backend.py
 ```
 It listens on `127.0.0.1:8770` (override with `BRAHMA_BACKEND_PORT`).
@@ -60,7 +60,7 @@ It listens on `127.0.0.1:8770` (override with `BRAHMA_BACKEND_PORT`).
 8) Quick CLI-only run
 ---------------------
 ```powershell
-.\ .venv\Scripts\activate
+\.venv\Scripts\activate
 python main.py
 ```
 
