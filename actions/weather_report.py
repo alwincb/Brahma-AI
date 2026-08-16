@@ -17,14 +17,14 @@ def weather_action(
     city = parameters.get("city")
     time = parameters.get("time")
     if not city or not isinstance(city, str):
-        msg = "Sir, the city is missing for the weather report."
+        msg = "Für den Wetterbericht fehlt die Stadt."
         _speak_and_log(msg, player)
         return msg
 
     city = city.strip()
 
     if not time or not isinstance(time, str):
-        time = "today"
+        time = "heute"
     else:
         time = time.strip()
 
@@ -35,11 +35,11 @@ def weather_action(
     try:
         webbrowser.open(url)
     except Exception:
-        msg = f"Sir, I couldn't open the browser for the weather report."
+        msg = "Ich konnte den Browser für den Wetterbericht nicht öffnen."
         _speak_and_log(msg, player)
         return msg
 
-    msg = f"Showing the weather for {city}, {time}, sir."
+    msg = f"Ich zeige das Wetter für {city}, {time}."
     _speak_and_log(msg, player)
 
     if session_memory:

@@ -14,10 +14,10 @@ def offline_assistant(command: str, player=None) -> str:
     lower = text.lower()
 
     if not text:
-        return "No offline command provided."
+        return "Kein Offline-Befehl angegeben."
 
     if lower.startswith(("open ", "launch ", "start ")):
-        return open_app(parameters={"app_name": text.split(" ", 1)[1]}, player=player) or "Opened."
+        return open_app(parameters={"app_name": text.split(" ", 1)[1]}, player=player) or "Geöffnet."
 
     if "clipboard" in lower:
         action = "search" if "search" in lower else "show"
@@ -70,7 +70,7 @@ def offline_assistant(command: str, player=None) -> str:
 
     # If nothing else, remind supported offline intents.
     return (
-        "I'm in offline mode. Try commands like: "
+        "Ich bin im Offline-Modus. Probiere zum Beispiel: "
         "'open chrome', 'system health', 'organize downloads', "
-        "'search files <name>', or 'list desktop'."
+        "'search files <name>' oder 'list desktop'."
     )
