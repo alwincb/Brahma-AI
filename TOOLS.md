@@ -27,8 +27,9 @@ Things like:
 
 ### TTS
 
-- Preferred voice: "Nova" (warm, slightly British)
-- Default speaker: Kitchen HomePod
+- Preferred voice: de-DE-ConradNeural (German Edge / neural)
+- Default spoken language: German (de-DE)
+- Fallback German voices: de-DE-KillianNeural, de-DE-KatjaNeural
 ```
 
 ## Why Separate?
