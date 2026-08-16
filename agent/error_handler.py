@@ -46,7 +46,7 @@ Return ONLY valid JSON:
   "reason": "why it failed",
   "fix_suggestion": "what to try instead (for replan)",
   "max_retries": 1,
-  "user_message": "Short message to tell the user (max 15 words)"
+  "user_message": "Kurze Nachricht auf Deutsch an den Nutzer (max. 15 Wörter)"
 }
 """
 
@@ -88,7 +88,7 @@ def analyze_error(
             "reason":        f"Failed {attempt} times: {error[:100]}",
             "fix_suggestion": "Try a completely different approach or tool",
             "max_retries":   0,
-            "user_message":  "Trying a different approach, sir."
+            "user_message":  "Ich versuche einen anderen Ansatz."
         }
 
     prompt = f"""Failed step:
@@ -125,7 +125,7 @@ Attempt number: {attempt}"""
 
         if step.get("critical") and result["decision"] == ErrorDecision.SKIP:
             result["decision"]     = ErrorDecision.REPLAN
-            result["user_message"] = "This step is critical — finding alternative approach, sir."
+            result["user_message"] = "Dieser Schritt ist wichtig — ich suche einen anderen Ansatz."
 
         print(f"[ErrorHandler] Decision: {result['decision'].value} — {result.get('reason', '')}")
         return result
@@ -137,7 +137,7 @@ Attempt number: {attempt}"""
             "reason":         str(e),
             "fix_suggestion": "Try alternative approach",
             "max_retries":    1,
-            "user_message":   "Encountered an issue, adjusting approach, sir."
+            "user_message":   "Es gab ein Problem, ich passe den Ansatz an."
         }
 
 

@@ -76,14 +76,14 @@ def reminder(
     message  = parameters.get("message", "Reminder")
 
     if not date_str or not time_str:
-        return "I need both a date and a time to set a reminder."
+        return "Für eine Erinnerung brauche ich Datum und Uhrzeit."
 
     try:
         target_dt = datetime.strptime(f"{date_str} {time_str}", "%Y-%m-%d %H:%M")
         now = datetime.now()
 
         if target_dt <= now:
-            return "That time is already in the past."
+            return "Dieser Zeitpunkt liegt bereits in der Vergangenheit."
 
         task_name    = f"Brahma AIReminder_{target_dt.strftime('%Y%m%d_%H%M')}"
         safe_message = message.replace('"', '').replace("'", "").strip()[:200]
@@ -94,7 +94,7 @@ def reminder(
             _schedule_local_reminder(task_name, target_dt, safe_message)
             if player:
                 player.write_log(f"[reminder] local timer set for {target_dt.strftime('%Y-%m-%d %H:%M')}")
-            return f"Reminder set for {target_dt.strftime('%B %d at %I:%M %p')}."
+            return f"Erinnerung gesetzt für {target_dt.strftime('%d.%m. um %H:%M Uhr')}."
 
         python_exe = sys.executable
         if python_exe.lower().endswith("python.exe"):
@@ -198,15 +198,15 @@ except Exception:
                 os.remove(notify_script)
             except Exception:
                 pass
-            return "I couldn't schedule the reminder due to a system error."
+            return "Die Erinnerung konnte wegen eines Systemfehlers nicht geplant werden."
 
         if player:
             player.write_log(f"[reminder] set for {target_dt.strftime('%Y-%m-%d %H:%M')}")
 
-        return f"Reminder set for {target_dt.strftime('%B %d at %I:%M %p')}."
+        return f"Erinnerung gesetzt für {target_dt.strftime('%d.%m. um %H:%M Uhr')}."
 
     except ValueError:
-        return "I couldn't understand that date or time format."
+        return "Dieses Datums- oder Zeitformat habe ich nicht verstanden."
 
     except Exception as e:
-        return f"Something went wrong while scheduling the reminder: {str(e)[:80]}"
+        return f"Beim Planen der Erinnerung ist etwas schiefgelaufen: {str(e)[:80]}"

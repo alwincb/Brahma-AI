@@ -22,7 +22,7 @@ DEFAULT_SETTINGS = {
     "elevenLabsApiKey": "",
     "elevenLabsVoiceId": "",
     "elevenLabsModel": "eleven_turbo_v2_5",
-    "edgeVoice": "en-US-GuyNeural",
+    "edgeVoice": "de-DE-ConradNeural",
     "edgeRate": "-6%",
     "edgePitch": "-2Hz",
     "piperExecutable": "",
@@ -32,19 +32,19 @@ DEFAULT_SETTINGS = {
 PROFILE_PRESETS = {
     "jarvis": {
         "providerOrder": ["elevenlabs", "edge_tts", "piper"],
-        "edgeVoice": "en-US-GuyNeural",
+        "edgeVoice": "de-DE-ConradNeural",
         "edgeRate": "-6%",
         "edgePitch": "-2Hz",
     },
     "friendly": {
         "providerOrder": ["elevenlabs", "edge_tts", "piper"],
-        "edgeVoice": "en-US-ChristopherNeural",
+        "edgeVoice": "de-DE-KillianNeural",
         "edgeRate": "+0%",
         "edgePitch": "+0Hz",
     },
     "minimal": {
         "providerOrder": ["edge_tts", "piper", "elevenlabs"],
-        "edgeVoice": "en-US-GuyNeural",
+        "edgeVoice": "de-DE-ConradNeural",
         "edgeRate": "-10%",
         "edgePitch": "-2Hz",
     },
@@ -163,7 +163,7 @@ def _speak_with_elevenlabs(text, settings):
 
 
 def _speak_with_edge(text, settings):
-    voice = settings.get("edgeVoice", "en-US-GuyNeural")
+    voice = settings.get("edgeVoice", "de-DE-ConradNeural")
     rate = settings.get("edgeRate", "-6%")
     pitch = settings.get("edgePitch", "-2Hz")
     with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
@@ -246,7 +246,7 @@ def _speak_with_piper(text, settings):
 def speak_text(text, settings=None, player=None):
     payload = str(text or "").strip()
     if not payload:
-        return {"ok": False, "provider": None, "message": "Nothing to speak."}
+        return {"ok": False, "provider": None, "message": "Nichts vorzulesen."}
 
     settings = settings or load_voice_settings()
     provider_order = settings.get("providerOrder") or DEFAULT_SETTINGS["providerOrder"]
@@ -269,13 +269,13 @@ def speak_text(text, settings=None, player=None):
                     player.stop_speaking()
                 except Exception:
                     pass
-            return {"ok": True, "provider": provider, "message": f"Voice response played with {provider}."}
+            return {"ok": True, "provider": provider, "message": f"Sprachausgabe über {provider} abgespielt."}
         except Exception as exc:
             errors.append(f"{provider}: {exc}")
 
     return {
         "ok": False,
         "provider": None,
-        "message": "No configured TTS provider succeeded.",
+        "message": "Kein konfigurierter TTS-Anbieter hat funktioniert.",
         "errors": errors,
     }
