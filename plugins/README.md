@@ -1,13 +1,13 @@
-# Brahma AI Plugins
+# Jarvis Plugins
 
-Brahma AI supports lightweight plugins so the community can add new skills and behaviors without touching core code.
+Jarvis supports lightweight plugins so the community can add new skills and behaviors without touching core code.
 
 ## Quick Start
 
 1. Create a folder under `plugins/` with your plugin name.
 2. Add a `plugin.json` manifest.
 3. Implement your logic in `index.py` (or another Python entry file).
-4. Restart Brahma AI.
+4. Restart Jarvis.
 
 ## Plugin Manifest
 
@@ -17,7 +17,7 @@ Brahma AI supports lightweight plugins so the community can add new skills and b
 {
   "name": "example-plugin",
   "version": "1.0.0",
-  "description": "A starter plugin for Brahma AI.",
+  "description": "A starter plugin for Jarvis.",
   "entry": "index.py"
 }
 ```

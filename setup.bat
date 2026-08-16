@@ -1,7 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
-REM Brahma AI bootstrap (one file)
+REM Jarvis bootstrap (one file)
 REM - First run: installs dependencies (manually, per-module), runs the app once, then marks setup as done.
 REM - Next runs: verifies deps are present, then launches immediately.
 
@@ -11,7 +11,7 @@ cd /d "%ROOT%"
 set "MARKER=%ROOT%.brahma_setup_done"
 
 echo.
-echo ===== Brahma AI Setup =====
+echo ===== Jarvis Setup =====
 echo Location: %ROOT%
 echo.
 
@@ -74,13 +74,13 @@ if exist "%ROOT%brahma-backend.exe" (
 
 REM --- First-run marker
 if exist "%MARKER%" (
-  echo [ok] Setup already completed. Launching Brahma AI...
+  echo [ok] Setup already completed. Launching Jarvis...
   echo.
   call npm start
   exit /b 0
 )
 
-echo [3/3] First launch: Brahma AI will start now.
+echo [3/3] First launch: Jarvis will start now.
 echo Close the app once it opens to finish setup.
 echo.
 call npm start
@@ -96,4 +96,3 @@ exit /b 0
 echo [error] npm install failed.
 pause
 exit /b 1
-

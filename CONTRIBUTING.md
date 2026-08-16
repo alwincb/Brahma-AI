@@ -1,4 +1,4 @@
-# Contributing to Brahma AI
+# Contributing to Jarvis
 
 Thanks for your interest in contributing.
 
