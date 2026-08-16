@@ -1,5 +1,5 @@
 {
-  "name": "brahma-ai-electron",
+  "name": "jarvis-electron",
   "version": "5.0.0",
   "private": true,
   "main": "electron/main.js",
@@ -20,8 +20,8 @@
   },
   "build": {
     "appId": "com.brahma.ai",
-    "productName": "Brahma AI",
-    "artifactName": "Brahma AI ${version}.${ext}",
+    "productName": "Jarvis",
+    "artifactName": "Jarvis ${version}.${ext}",
     "npmRebuild": false,
     "files": [
       "electron/**",

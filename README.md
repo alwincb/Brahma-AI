@@ -1,6 +1,6 @@
-# Brahma AI
+# Jarvis
 
-Brahma AI is a personal, Windows-first AI assistant with voice interaction, local task execution, and an Electron UI.
+Jarvis is a personal, Windows-first AI assistant with voice interaction, local task execution, and an Electron UI.
 
 ## Features
 
